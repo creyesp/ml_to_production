@@ -1,0 +1,23 @@
+version: 2.1
+
+jobs:
+  test_regression_model_py37:
+    docker:
+      - image: circleci/python:3.7.6
+    working_directory: ~/project
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Run tests with Python 3.7
+          command: |
+            virtualenv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r src/ml_model/requirements.txt
+
+workflows:
+  version: 2.1
+  test-all:
+    jobs:
+      - test_regression_model_py37
