@@ -1,0 +1,1 @@
+-r ./src/ml_model/requirements.txt
