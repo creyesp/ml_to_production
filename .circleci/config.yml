@@ -1,23 +1,21 @@
 version: 2.1
 
+orbs:
+  python: circleci/python@0.2.1
+
 jobs:
-  test_regression_model_py37:
-    docker:
-      - image: circleci/python:3.7.6
-    working_directory: ~/project
+  build-and-test:
+    executor: python/default
     steps:
-      - checkout:
-          path: ~/project
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
       - run:
-          name: Run tests with Python 3.7
-          command: |
-            virtualenv venv
-            . venv/bin/activate
-            pip install --upgrade pip
-            pip install -r src/ml_model/requirements.txt
+          command: ./manage.py test
+          name: Test
 
 workflows:
-  version: 2.1
-  test-all:
+  main:
     jobs:
-      - test_regression_model_py37
+      - build-and-test
