@@ -1,10 +1,14 @@
 from pathlib import Path
+import os
+
+import ml_model
+
 
 PACKAGE_ROOT = Path(ml_model.__file__).resolve().parent
 
-DATA_URL = "https://github.com/creyesp/Meetup_uy/blob/master/data/ready/properties.csv"
+DATA_URL = "https://raw.githubusercontent.com/creyesp/Meetup_uy/master/data/ready/properties.csv"
 
-TARGET = 'sale_price'
+TARGET = 'price'
 
 DROP_FEATURES = [
     'year',
@@ -33,5 +37,9 @@ CATEGORICAL_FEATURES = [
     'state',
 ]
 
+FEATURES = \
+    DROP_FEATURES + NUMERICAL_FEATURES + BINARY_FEATURES + CATEGORICAL_FEATURES
+
 PIPELINE_NAME = "house_price_prediction"
 PIPELINE_SAVE_FILE = f"{PIPELINE_NAME}_output_v"
+TRAINED_MODEL_DIR = os.path.join(PACKAGE_ROOT, 'trained_models')
